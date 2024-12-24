@@ -1,6 +1,6 @@
 博学之, 审问之, 慎思之, 明辨之, 笃行之;
 零、壹、贰、叁、肆、伍、陆、柒、捌、玖、拾;
-
+视频地址(https://www.bilibili.com/video/BV1iF411z7Pu/)
 
 
 零.SQL语言初识
@@ -87,7 +87,24 @@
 
 
 
-壹.数据操纵语言DML
+壹.数据库基本操作DDL
+
+    DDL(Data Definition Language)数据库定义语言
+        1.对数据库的常用操作
+            查看所有的数据库
+                show databases;
+            创建数据库
+                create database [if not exists] mydb1 [charset=utf8]
+            切换数据库
+                use mydb1
+            删除数据库
+                drop databases [if exists] mydb1;
+            修改数据库编码
+                alter database mydb1 character set utf8;
+        2.对表结构的常用操作
+        3.修改表结构
+
+
 
     
 
