@@ -87,29 +87,67 @@
 
 
 
-壹.数据库基本操作DDL
+壹.数据库基本操作DDL(DDLManipulate)
 
     DDL(Data Definition Language)数据库定义语言
         1.对数据库的常用操作
-            查看所有的数据库
-                show databases;
-            创建数据库
-                create database [if not exists] mydb1 [charset=utf8]
-            切换数据库
-                use mydb1
-            删除数据库
-                drop databases [if exists] mydb1;
-            修改数据库编码
-                alter database mydb1 character set utf8;
         2.对表结构的常用操作
         3.修改表结构
+    数据库操作(databaseManipulate.sql)
+        查看所有的数据库
+            show databases;
+        创建数据库
+            create database [if not exists] mydb1 [charset=utf8]
+        切换数据库
+            use mydb1
+        删除数据库
+            drop databases [if exists] mydb1;
+        修改数据库编码
+            alter database mydb1 character set utf8;
+    表操作(tableManipuldate.sql)
+        查看所有的表
+            show tables;
+        查看某个表的创建语句
+            show create table mytb1
+        查看表结构
+            desc mytb1
+        删除表
+            drop mytb1
+        修改表
+            TODO
+            TODO
+            TODO
 
-
-
-    
-
-
-
+        SQL的三大类型
+            数值类型
+                整数型
+                    tinyint
+                    smallint
+                    mediumint
+                    int(integer)
+                    bigint
+                浮点数型
+                    float
+                    double
+                    decimal(m,d)
+                        decimal(5,2) => 123.45
+            字符串类型
+                char            定长字符串
+                varchar         变长字符串
+                tinyblob
+                tinytext
+                blob
+                text
+                mediumblob
+                mediumtext
+                longblob
+                longtext
+            日期时间类型
+                date
+                time
+                year
+                datetime
+                timestamp
 
 
 
