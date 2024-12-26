@@ -87,7 +87,7 @@
 
 
 
-壹.数据库基本操作DDL(DDLManipulate)
+壹.数据库基本操作DDL(001DDLManipulate)
 
     DDL(Data Definition Language)数据库定义语言
         1.对数据库的常用操作
@@ -114,10 +114,14 @@
         删除表
             drop mytb1
         修改表
-            TODO
-            TODO
-            TODO
-
+            添加列
+                alter table mytb1 add myfield1 varchar(20);
+            修改列
+                alter table mytb1 change oldfield1 newfield1 varchar(20);
+            删除列
+                alter table mytb1 drop myfield1;
+            修改表名
+                rename table oldtb1 to newtb1;
         SQL的三大类型
             数值类型
                 整数型
@@ -152,7 +156,43 @@
 
 
 
+贰.数据库基本操作DML(002DMLManipulate)
+    DML(Data Manipulation Language)数据操作语言
+        insert
+        delete
+        update
 
+    增删改操作(cudManipulate.sql)
+        insert
+        delete/truncate
+        update
+
+
+
+叁.约束(003Constraint)
+
+    约束英文: constraint
+    约束就是对表中数据的限制条件
+    约束分类:
+        主键约束(primary key [PK])
+            简称PK,约束该列的值唯一且不能为空
+        自增长约束(auto_increment)
+            一般和主键约束配合在一起用,约束该列的值自增长
+        非空约束(not null)
+            约束该列不能为空
+        唯一性约束(unique)
+            约束该列的值不能重复,必须唯一
+        默认约束(default)
+            当没有规定约束时,列默认选择的约束项
+        零填充约束(zerofill)
+            约束整型字段为空时默认填充零为值
+        外键约束(foregin key [FK])
+            在多表操作时会用到的约束
+
+    1.主键约束(primaryKey.sql)
+        添加单列主键
+        添加多列联合主键(复合主键)
+        删除主键
 
 
 

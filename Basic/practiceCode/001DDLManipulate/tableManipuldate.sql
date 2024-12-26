@@ -23,22 +23,13 @@
 
 # drop table if exists student;
 
+# show tables;
 
+# 修改表结构
+# alter table student add `dept` varchar(20);
+# alter table student change `dept` department varchar(30);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# rename table student to student1;
 
 
 
