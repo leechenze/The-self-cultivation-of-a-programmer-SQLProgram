@@ -112,7 +112,7 @@
         查看表结构
             desc mytb1
         删除表
-            drop mytb1
+            drop table mytb1
         修改表
             添加列
                 alter table mytb1 add myfield1 varchar(20);
@@ -197,11 +197,10 @@
         修改表结构/删除主键
 
     2.自增长约束(autoIncrement.sql)
-
-
-
-
-
+    3.非空约束(notNull.sql)
+    4.唯一约束(unique.sql)
+    5.默认约束(default.sql)
+        
 
 
 
