@@ -42,7 +42,29 @@ select 'stb' regexp '.ta?b';
 select 'staab' regexp '.ta?b';
 
 -- a1|a2: 匹配a1或者a2
--- TODO
+select 'a' regexp 'a|b';
+select 'b' regexp 'a|b';
+-- ^在这里表示是的是头匹配
+select 'b' regexp '^(a|b)';
+select 'c' regexp '^(a|b)';
+
+-- a{m} 匹配m个a
+select 'auuuuc' regexp 'au{4}c';
+select 'auuuuc' regexp 'au{3}c';
+-- a{m,} 匹配m个到无限个a
+select 'auuuuc' regexp 'au{3,}c';
+select 'auuuuc' regexp 'au{5,}c';
+-- a{m,n} 匹配m个到n个a
+select 'auuuuc' regexp 'au{3,5}c';
+select 'auuuuc' regexp 'au{4,5}c';
+select 'auuuuc' regexp 'au{5,10}c';
+
+-- (abc): ()表示序列匹配, 不用括号时是单个字符匹配, 加上括号表示一组一个整体匹配.
+select 'xabcy' regexp 'x(abc)y';
+select 'xabcy' regexp 'x(abc){1,2}y';
+select 'xabcy' regexp 'x(abc){3}y';
+
+
 
 
 

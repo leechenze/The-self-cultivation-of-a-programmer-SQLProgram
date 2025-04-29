@@ -4,19 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bc9c5af5-c1a1-43cc-ae11-7bedbf1157fd" name="Changes" comment="P030T000000">
-      <change afterPath="$PROJECT_DIR$/default.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zerofill.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../004DQLManipulate/aggregation.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../004DQLManipulate/groupby.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../004DQLManipulate/operators.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../004DQLManipulate/regexp.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../004DQLManipulate/simple.sql" afterDir="false" />
+    <list default="true" id="bc9c5af5-c1a1-43cc-ae11-7bedbf1157fd" name="Changes" comment="P059T000000">
       <change beforePath="$PROJECT_DIR$/../../SummaryOfNotes.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../SummaryOfNotes.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/e64d44bf-aac4-44f6-b603-7984983396ab.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/e64d44bf-aac4-44f6-b603-7984983396ab.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/primaryKey.sql" beforeDir="false" afterPath="$PROJECT_DIR$/primaryKey.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../004DQLManipulate/regexp.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../004DQLManipulate/regexp.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,6 +61,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="P030T000000" />
-    <option name="LAST_COMMIT_MESSAGE" value="P030T000000" />
+    <MESSAGE value="P059T000000" />
+    <option name="LAST_COMMIT_MESSAGE" value="P059T000000" />
   </component>
 </project>
