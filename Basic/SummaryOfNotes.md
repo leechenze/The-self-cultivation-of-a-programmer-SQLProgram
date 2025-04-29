@@ -156,7 +156,8 @@
 
 
 
-贰.数据库基本操作DML(002DMLManipulate)
+贰.数据库基本操作DML(002DMLManipulation)
+    
     DML(Data Manipulation Language)数据操作语言
         insert
         delete
@@ -200,6 +201,131 @@
     3.非空约束(notNull.sql)
     4.唯一约束(unique.sql)
     5.默认约束(default.sql)
+        默认约束就是指定一个默认值
+    6.零填充约束(zerofill.sql)
+        零填充约束默认类型为 int(10), 而int的默认长度是 int(11)
+        零填充约束主要是针对数值类型的约束, 即当字段的值的长度小于定义的长度时,会在该值的前面补上相应的0.
+        当使用zerofill时, 默认会自动加 unsigned (无符号)属性
+
+
+
+肆.数据库基本操作DQL(004DQLManipulate)
+
+    DQL(Data Query Language)数据查询语言
+    通俗易懂的说法具体指的就是select语句的查询
+    包括很多where的条件以及group by, having, order by, limit这些查询等....
+    
+    0.首先数据准备(simple.sql)
+        product表创建和数据创建, 详见simple.sql
+    1.简单查询(simple.sql)
+        查询所有商品
+        查询指定列
+        表别名
+        列别名
+        去掉重复值
+        运算查询
+            即查询结果是表达式,将所有商品的价格+10元进行显示
+
+    2.运算符(operators.sql)
+        算数运算符
+            +, -, *, /或DIV, %或MOD
+        比较运算符
+            =
+            < 和 <=
+            > 和 >=
+            <=>
+                安全的等于, 两个操作码均为NULL时, 其所得值为1, 而当一个操作码为NULL时, 其所得值为0
+            <> 或 !=
+            is null 或 isnull
+                在sql中, null和任何值都不相等,包括null本身, 所以判断null值只能通过这两个关键字
+            is not null
+            least
+                当有两个或多个值时,返回最小值
+            greatest
+                当有两个或多个值时,返回最大值
+            between and
+                语法为: between *** and ***
+            in
+            not in
+            like
+                通配符匹配
+            regexp
+                正则表达式匹配
+        逻辑运算符
+            not 或 !
+                逻辑非
+            and 或 &&
+                逻辑与
+            or 或 ||
+                逻辑或
+            xor
+                逻辑异或
+                两个值, 不同时为真, 相同时为假
+        位运算符
+            这里做个了解, 实际应用场景很少, 他是涉及对二进制位的一个操作, 只需要知道sql支持二进制运算即可.
+            |
+                按位或
+            &
+                按位与
+            ^
+                按位异或
+            <<
+                按位左移
+            >>
+                按位右移
+            ~
+                按位取反, 反转所有比特
+    
+    3.排序查询(operators.sql)
+        order by
+            如果不指定排序方式默认为asc, 即升序排序
+            可以支持单个字段,多个字段, 表达式, 函数, 别名
+            order by语句在查询语句的最后面, limit除外.
+        asc
+            升序排序
+        desc
+            降序排序
+    
+    4.聚合查询(aggregation.sql)
+        之前的查询都是横向查询,他们都是根据条件一行一行的进行判断和过滤, 而使用聚合函数查询是纵向查询,
+        他是对一列的值进行计算, 然后返回一个单一的值, 并且聚合函数会忽略null值.
+        
+        最常用的聚合函数
+            count()
+                统计列不为null的行数
+            sum()
+                计算指定列的数值和, 如果指定列的类型不是数值类型, 那么计算结果为0
+            max()
+                计算指定列的最大值, 如果指定列是字符串类型, 那么使用字符串的规则(阿斯克码)排序运算
+            min()
+                计算指定列的最小值, 如果指定列是字符串类型, 那么使用字符串的规则(阿斯克码)排序运算
+            avg()
+                计算指定列的平均值, 如果指定列类型不是数值类型, 那么计算结果为0.
+            
+        聚合查询对null值的处理
+            所有的聚合函数对null值都不做统计, 比如avg求均值的函数, 会将总数除以条数, 但是如果该值为null时, 就不会被avg统计为一条
+
+    5.分组查询(groupby.sql)
+        group by
+            顾名思义 group by 语句就是对查询信息结果进行分类的
+        having
+            having用于筛选分组数据的, 和where的作用类似, 但是分组条件不能用where筛选
+            where子句是对from子句总指定的操作所过滤的结果行
+            group by子句是对where的结果进行分组
+            having子句用来对分组之后的结果进行过滤筛选.
+        limit
+            分页查询
+        insert into select
+            语法: 
+                insert into table1 (field1, field2) select (val1, val2) from table2
+                或在列都相同的情况下可以简写为
+                insert into table1 select * from table2
+            作用就是将 table2 的 select 的结果插入到 table1 的表中.
+            
+    6.正则表达式(regexp.sql)
+        
+        TODO
+        
         
 
 
@@ -207,4 +333,5 @@
 
 
 
-零、壹、贰、叁、肆、伍、陆、柒、捌、玖、拾;
+            
+零、 壹、贰、叁、肆、伍、陆、柒、捌、玖、拾;

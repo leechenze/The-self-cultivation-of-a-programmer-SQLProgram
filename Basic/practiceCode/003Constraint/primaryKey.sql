@@ -77,6 +77,8 @@ alter table emp3 drop primary key;
 show columns from emp3;
 # 等价于
 describe emp3;
+# 简写为
+# desc emp3;
 
 # 修改表name字段允许为null
 alter table emp3 modify name varchar(20) null;
