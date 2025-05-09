@@ -430,7 +430,78 @@
             将一张表当成多张表来用, 即这个表自己和自己关联
             语法:
                 select * from sanguo s1 join sanguo s2 where s1.manager_id = s2.id;
+
+
+
+
+
+陆.函数(006Function)
+    
+    函数分类:
+        聚合函数
+        数学函数
+        字符串函数
+        日期函数
+        控制流函数
+        窗口函数(只有mysql8.0以上支持窗口函数)
+
+
+    聚合函数(aggregationFunction.sql)
+        count()
+            统计列不为null的行数
+        sum()
+            计算指定列的数值和, 如果指定列的类型不是数值类型, 那么计算结果为0
+        max()
+            计算指定列的最大值, 如果指定列是字符串类型, 那么使用字符串的规则(阿斯克码)排序运算
+        min()
+            计算指定列的最小值, 如果指定列是字符串类型, 那么使用字符串的规则(阿斯克码)排序运算
+        avg()
+            计算指定列的平均值, 如果指定列类型不是数值类型, 那么计算结果为0.
+        group_concat()
+            对行进行字符串拼接, 输出为字符串.
+
+    数学函数(mathFunction.sql)
+        abs(x)
+            返回x的绝对值
+        ceil(x)
+            返回大于或等于x的最小整数
+        floor(x)
+            返回小于或等于x的最大整数
+        greatest(expr1, expr2, expr3, ...)
+            返回列表中的最大值
+        least(expr1, expr2, expr3)
+            返回列表中的最小值
+        max(expression)
+            返回expression的最大值
+        min(expression)
+            返回expression的最小值
+        mod(x,y)
+            返回x除以y之后的余数
+        pi()
+            返回圆周率
+        pow(x,y)
+            返回x的y次方
+        rand()
+            返回0到1的随机数
+        round(x)
+            返回离x最近的整数
+        round(x,y)
+            返回离x最近的整数,并返回指定位数的小树(y)
+        truncate(x,y)
+            返回数值x保留到小数点后y位的值, 与round的区别就是不会进行四舍五入, 只保留指定位的小数后其余数直接截掉
         
+    字符串函数(strFunction.sql)
+        TODO
+
+
+        
+    日期函数
+        
+    控制流函数
+        
+    窗口函数
+        
+
 
 
 

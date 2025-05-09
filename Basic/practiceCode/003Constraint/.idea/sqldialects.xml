@@ -14,5 +14,8 @@
     <file url="file://$PROJECT_DIR$/../004DQLManipulate/simple.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/../005MultiTableManipulate/foreignKeyconstraints.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/../005MultiTableManipulate/mutilTableUnionQuery.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/../006Function/aggregationFunction.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/../006Function/mathFunction.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/../006Function/strFunction.sql" dialect="MySQL" />
   </component>
 </project>
