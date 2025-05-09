@@ -323,15 +323,117 @@
             作用就是将 table2 的 select 的结果插入到 table1 的表中.
             
     6.正则表达式(regexp.sql)
+        -- ^: 在字符串开始处进行匹配(头匹配)
+        -- ^: 匹配商品名称以 wa 开头的数据
+        -- $: 匹配商品名称以 water 结尾的数据
+        -- .: 匹配任意单个字符
+        -- []: 匹配括号内的任意单个字符
+        -- [^]: 匹配括号内的非任意单个字符, 注意^只有在[]内才是取反的意思,在[]外表示开始头匹配.
+        -- 这个结果是真(1)是因为 [^ab] 的含义是除了a和b之外的所有字母, 所以 select 'abc' 中还有个c是成立的.
+        -- a*: 匹配0个或多个a,包含空字符串, 可以作为占位符使用, 有没有指定字符都可以匹配到数据
+        -- a+: 匹配1个或多个a, 不包含空字符串
+        -- a?: 匹配0个或者1个a
+        -- a1|a2: 匹配a1或者a2
+        -- ^在这里表示是的是头匹配
+        -- a{m} 匹配m个a
+        -- a{m,} 匹配m个到无限个a
+        -- a{m,n} 匹配m个到n个a
+        -- (abc): ()表示序列匹配, 不用括号时是单个字符匹配, 加上括号表示一组一个整体匹配.
+
+
+
+
+
+
+伍.多表操作(005MultiTableManipulate)
+
+    0.多表概念
+        Sql多表之间的关系可以概括为:
+            一对一, 一对多/多对一, 多对多
+    
+    1.外键约束(foreignKeyconstraints.sql)
         
+        主表的数据被从表依赖时, 不能删除, 否则可以删除, 从表的数据删除不受影响
         
+        在多对多的关系中, A表的一行对于B表的多行, B表的一行也会对应A表的多行, 这时就要新增一个中间表, 来建立A表和B表的多对多关系
         
+    2.多表联合查询(mutilTableUnionQuery.sql)
+        交叉连接查询
+            会产生笛卡尔积, 做个了解, 这种查询会产生很多冗余的数据
+            语法: select * from A,B
+            交叉连接查询返回被连接的两个表的所有数据行的笛卡尔积
+            笛卡尔是一个法国十六世纪的数学家和哲学家, 他提出过哲学命题<我思故我在>
+            笛卡尔积:
+                如果有两个集合：
+                    A = {1, 2}
+                    B = {a, b, c}
+                则它们的笛卡尔积是：
+                    A × B = {
+                        (1, a), (1, b), (1, c),
+                        (2, a), (2, b), (2, c)
+                    }
+            所以笛卡尔积可以通俗易懂的解释为:
+            A表有m行数据,B表有n行数据,A和B表的交叉连接查询则返回 m*n 条数据
+        内连接查询
+            关键字 inner join, inner可以省略不写
+            语法:
+                隐私内连接(SQL92标准): select * from A, B where ...(query conditions)
+                显示内连接(SQL99标准): select * from A inner join B on ...(query conditions)
+        外连接查询
+            关键字 outer join, outer可以省略不写
+            左外连接:
+                left outer join
+                语法: select * from A left outer join B on ...(query conditions)
+            右外连接:
+                right outer join
+                语法: select * from A right outer join B on ...(query conditions)
+            满外连接:
+                oracle中对满外连接是支持的, 但是在mysql中, 对满外连接的支持很不好. 但也可以使用union来达到满外连接的目的
+                full outer join
+                语法: select * from A full outer join B on ...(query conditions)
+        子查询
+            所谓子查询就是 select 嵌套查询
+            子查询可以返回的数据类型一般分为四种:
+                单行单列
+                单行多列
+                多行单列
+                多行多列
+            子查询关键字
+                all
+                    满足所有条件
+                    语法:
+                        select * from employee2 where age > all(50,60);
+                        等价于:
+                        select * from employee2 where age > 50 and age > 60;
+                any
+                    满足任何一个条件
+                    语法:
+                        select * from employee2 where age > any(50,60);
+                        等价于:
+                        select * from employee2 where age > 50 or age > 60;
+                some
+                    满足某一个条件, some和any是一回事, 可以理解为any的别名, 因为some用的比较少一点, 常用的就是any.
+                in
+                    包含其中任何一个条件
+                    语法:
+                        select * from employee2 where age in (50,60);
+                        等价于:
+                        select * from employee2 where age = 50 or age = 60;
+                exists
+                    判断查询是否有结果, 有为true, 无结果为false
+                    exists关键字比in关键字查询效率要高, 因此在大数据量查询时, 推荐使用exists.
+                    语法:
+                        select * from employee2 as e2 where exists(select * from employee2 where e2.age > 60);
+                        结果等价于:
+                        select * from employee2 as e2 where age in (select age from employee2 where age > 60);
+        表自关联
+            将一张表当成多张表来用, 即这个表自己和自己关联
+            语法:
+                select * from sanguo s1 join sanguo s2 where s1.manager_id = s2.id;
         
 
 
 
 
 
-
-            
 零、 壹、贰、叁、肆、伍、陆、柒、捌、玖、拾;
