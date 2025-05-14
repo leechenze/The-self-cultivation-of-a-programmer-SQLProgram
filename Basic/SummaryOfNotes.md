@@ -491,15 +491,210 @@
             返回数值x保留到小数点后y位的值, 与round的区别就是不会进行四舍五入, 只保留指定位的小数后其余数直接截掉
         
     字符串函数(strFunction.sql)
-        TODO
+        # 获取字符串个数
+        select char_length('hello');
+        select char_length('你好');
+        select character_length('hello');
+        select character_length('你好');
+        # 获取字节长度
+        select length('hello');
+        select length('你好');
+        
+        # 字符串合并
+        select concat('hello ','world!');
+        select concat('h','e','l','l','o');
+        # 合并且添加分隔符
+        select concat_ws('-', 'hello','world');
+        
+        # 返回字符串在列表中的位置
+        select field('bbb', 'aaa','bbb','ccc');
+        select field('ccc', 'aaa','bbb','ccc');
+        
+        # 去除字符串左边空格
+        select ltrim('    aaa');
+        # 去除字符串右边空格
+        select rtrim('aaa    ');
+        # 去除左右空格
+        select trim('   aaa   ');
+        
+        # 字符串截取
+        # 从第二个字符开始截取,截取三位
+        select mid('hello,world', 2, 3);
+        
+        # 获取字符串在字符串中的位置
+        select position('ow' in 'hellow, world!');
+        
+        # 字符串替换
+        select replace('hello, world!', 'world', 'douglas');
+        
+        # 字符串反转
+        select reverse('hello');
+        
+        # 返回字符串的后几位字符
+        select right('hello', 3);
+        
+        # 字符串比较
+        select strcmp('hello', 'world');
+        select strcmp('hello', 'hello');
+        select strcmp('world', 'hello');
+        
+        # 字符串截取
+        select substr('hello', 2, 3);
+        select substring('hello', 2, 3);
+        
+        # 大写转换小写
+        select lcase('HELLO, WORLD!');
+        select lower('HELLO, WORLD!');
+        # 小写转换大写
+        select ucase('hello, world!');
+        select upper('hello, world!');
 
+    日期函数(dateFunction.sql)
+        # 获取当前时间戳
+        select unix_timestamp();
+        # 将一个日期字符串转为毫秒值
+        select unix_timestamp('2021-12-21 08:00:00');
+        # 将时间戳毫秒值转为指定格式的日期
+        select from_unixtime('1640044800', '%Y-%m-%d %H:%i:%s');
+        # 获取当前年月日
+        select curdate();
+        select current_date();
+        # 获取当前十分秒
+        select curtime();
+        select current_time();
+        # 获取日期和时间(年月日和十分秒)
+        select current_timestamp();
+        # 从日期字符串中获取年月日
+        select date('2025-05-14 08:00:00');
+        # 获取两个字符串日期之间的差值
+        select datediff('2025-5-14', '2025-3-16');
+        # 获取两个字符串时间之间的差值
+        select timediff('12:00:00', current_time());
+        # 时期格式化
+        select date_format('2025-5-14 1:1:1', '%Y-%m-%d %H:%i:%s');
+        # 将字符串转换日期
+        select str_to_date('2025-5-14 1:1:1', '%Y-%m-%d %H:%i:%s');
+        select str_to_date('August 10 2024', '%M %d %Y');
+        # 将日期进行减法运算(将当前日期向前减两天)
+        select date_sub('2021-10-01', interval 2 day);
+        # (将当前日期向前减两月)
+        select date_sub('2021-10-01', interval 2 month);
+        select subdate('2021-10-01', interval 2 month);
+        # 将日期进行加法运算(将当前日期向前加两天)
+        select date_add('2021-10-01', interval 2 day);
+        # (将当前日期向前加两月)
+        select date_add('2021-10-01', interval 2 month);
+        select adddate('2021-10-01', interval 2 month);
+        # 从日期中获取(年月日)
+        select extract(year from '2025-5-14 9:8:1');
+        select extract(month from '2025-5-14 9:8:1');
+        select extract(day from '2025-5-14 9:8:1');
+        select extract(hour from '2025-5-14 9:8:1');
+        select extract(minute from '2025-5-14 9:8:1');
+        select extract(second from '2025-5-14 9:8:34');
+        # 获取给定日期的所在月的最后一天
+        select last_day('2021-08-24');
+        # 获取指定年份和天数的日期
+        select makedate('2021', 1);
+        select makedate('2021', 30);
+        select makedate('2021', 53);
+        # 根据给定日期获取年月季日十分秒
+        select year('2025-5-14 9:8:34');
+        select month('2025-5-14 9:8:34');
+        select quarter('2025-5-14 9:8:34');
+        select day('2025-5-14 9:8:34');
+        select hour('2025-5-14 9:8:34');
+        select minute('2025-5-14 9:8:34');
+        select second('2025-5-14 9:8:34');
+        # 获取月份名字
+        select monthname('2025-5-14 9:8:34');
+        # 获取本周星期几
+        select dayname('2025-5-14 9:8:34');
+        # 获取当前天是本月的第几天
+        select dayofmonth('2025-5-14 9:8:34');
+        # 获取当前天是本周的第几天(注意: 1是星期日,2是星期一,依此类推)
+        select dayofweek('2025-5-14 9:8:34');
+        # 获取当前天是今年的第几天
+        select dayofyear('2025-5-14 9:8:34');
+        
+        # 获取当前日期是本年的第几周(范围是0-52区间)
+        select week('2025-5-14 9:8:34');
+        # 获取当前天是本周的第几天(注意: 0是星期一,1是星期二,依此类推)
+        select weekday('2025-5-14 9:8:34');
+        # 获取本年的第几周
+        select weekofyear('2025-5-14 9:8:34');
+        # 获取当前年和当前年的第几周
+        select yearweek('2025-5-14 9:8:34');
+        # 获取当前日期时间
+        select now();
 
+    控制流函数(controlFlowFunction.sql)
+        # if逻辑判断语句
+        select if(2>1, '成立','不成立');
+        # ifnull
+        select ifnull(5,0);
+        select ifnull(null,0);
+        # isnull
+        select isnull(5);
+        select isnull(null);
+        # nullif(比较两个字符串,如果字符串第一个值和第二个值相同返回null,否则返回第一个值)
+        select nullif(10,10);
+        select nullif(20,10);
         
-    日期函数
-        
-    控制流函数
-        
-    窗口函数
+        # case when语句
+        # 用法一
+        select
+        case 4
+        when 1 then 'Douglas'
+        when 2 then 'Abraham'
+        when 3 then 'Nixon'
+        when 4 then 'Bush'
+        when 5 then 'Washington'
+        else 'null'
+        end as name;
+        # 用法二
+        select
+        case
+        when 2>1 then '成立' else '不成立'
+        end as result;
+
+    窗口函数(windowFunction.sql)
+        窗口函数又被称为开窗函数, 是mysql8.0之后新增的
+        语法:
+            window_function (expr) over (
+                partition by ...
+                order by ...
+                frame_clause
+            )
+            解读:
+                window function是窗口函数的名称, expr是参数, 有些函数不需要参数, over子句包含三个选项:
+                1.分区(partition by)
+                    partition by选项用于将数据行拆分成多个分区(组),作用类似于group by.
+                2.排序(order by)
+                    order by选项用于指定分区内的排序.
+                3.窗口大小(frame_clause)
+                    frame_clause选项用于在当前分区内指定一个计算窗口,也就是一个与当前行相关的数据子集
+                    窗口大小参数默认的值是:
+                        rows between unbounded preceding and current row
+                    关键字:
+                        rows 声明窗口大小的必要关键字
+                        unbounded 无边界行, 通常用来表示第一行和最后一行
+                        current row 当前行
+                        x preceding 表示前x行,可搭配unbounded关键字使用, unbounded preceding 表示第一行
+                        x following 表示后x行,可搭配unbounded关键字使用, unbounded following 表示最后行
+        窗口函数分类:
+            序号函数
+                row_number()
+                rank()
+                dense_rank()
+            窗口聚合函数
+                sum,avg,min,max
+            分布函数
+                cume_dist()
+                precent_rank()
+            前后函数
+            头尾函数
+            其他函数
         
 
 
