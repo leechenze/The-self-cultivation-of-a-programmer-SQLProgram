@@ -691,11 +691,154 @@
                 sum,avg,min,max
             分布函数
                 cume_dist()
-                precent_rank()
+                    解释: 分组内小于等于当前rank值的行数/分组内总行数
+                    应用场景: 查询小于等于当前薪资的比例
+                percent_rank()
+                    解释: 每行按照公示(rank-1)/(rows-1)进行计算. 其中, rank为rank()函数产生的序号, rows为当前窗口的记录总行数
+                    应用场景: 很少用
             前后函数
+                lag/lead
+                    解释: 返回位于当前行的前n行(lag(expr,n,默认值))或后n行(lead(expr,n,默认值))的expr的值
+                    应用场景: 查询前一名同学的成绩和当前同学成绩的差值
             头尾函数
+                first_value(expr)/last_value(expr)
+                    解释: 返回第一个(first_value(expr))和最后一个(last_value(expr))的值
+                    应用场景: 截止到当前行, 按照日期排序查询第一个入职和最后一个入职员工的薪资
             其他函数
+                nth_value(expr,n)
+                    解释: 返回窗口中第n个expr的值, expr可以是表达式, 也可以是别名
+                    应用场景: 截止到当前行薪资, 显示每个员工的薪资中排名第二或者第三的薪资
+                ntile(n)
+                    解释: 将分区中有序数据分为n个等级, 记录等级数
+                    应用场景: 将每个部门员工按照入职日期分成3组
+
+
+
+柒.(007View)
+
+    视图介绍:
+        视图是一个虚拟表, 非真实表, 其本质是根据sql语句获取动态的数据集, 并为其命名, 用户使用时只需使用视图名称即可获取结果集, 并可以将其当作表来使用
+        数据库中只存放了视图的定义, 并没有存放视图中的数据. 这些数据存放在原来的表中.
+        使用视图查询数据时, 数据库系统会从原来的表中取出对应的数据, 因此, 视图中的数据是依赖于原来的表中的数据的. 一旦表中的数据发生改变, 显示在视图中的数据也会发生改变.
+    视图作用:
+        简化代码, 可以把重复使用的查询封装成视图重复使用, 同时可以使复杂的查询易于理解和使用.
+        安全原因, 如果一张表中的很多涉密数据, 很多信息不希望让所有人看到, 此时可以使用视图, 可以只显示开放的数据, 如:姓名, 性别等.
         
+    视图操作(viewManipulate.sql)
+        创建视图
+            create or replace view view_emp_view as ( ...视图sql )
+        修改视图
+            alter view view_emp_view as ( ...视图sql )
+        更新视图
+            update view_emp_view set ename = '周瑜' where ename = '谢逊';
+            注意: 当视图中存在以下结构时,那么该视图是不可被更新的.
+                聚合函数
+                distinct
+                group by
+                having
+                union 或 union all
+                包含子查询的
+                有连表操作的 join
+                该视图自己指定生成的列(这种情况都没有要更新的基础表,所以不能更新了)
+                    比如: select '李安' as name;
+            所以视图中虽然可以更新数据, 但是一般这么操作是被禁止的, 视图的作用就是作为一张虚拟表查询用的.
+            更新视图是有很大的安全隐患和风险的.
+        删除视图
+            drop view if exists [viewName]
+        重命名视图
+            rename table [oldName] to [newName]
+
+
+
+
+
+捌.(008StoredProcedures)
+
+    存储过程介绍
+        mysql从5.0版本开始支持存储过程
+        简单说存储过程就是一组sql集, 功能强大, 可以实现一些比较复杂的逻辑功能, 类似于编程语言中的方法的概念.
+        存储过程就是数据库sql语言层面的代码封装与复用.
+    特性
+        有输入输出参数, 可以声明变量, 有if/else,case,while等控制语句, 通过编写存储过程, 可以实现复杂的逻辑功能.
+        函数的普遍特性: 模块化, 封装, 代码复用.
+        速度快, 只有首次执行需经过编译和优化步骤, 后续被调用可以直接执行.
+
+    入门案例(example.sql)
+        定义存储过程的结束符 一般推荐使用 $$ 或 \\
+    
+    变量定义(variable.sql)
+        局部变量
+            声明方式: 通过 declare 关键字声明
+            解释: 仅在begin和end之间声明的作用域有效
+            语法一:
+                delimiter $$
+                create procedure proc02()
+                begin
+                    # 声明变量
+                    declare varname01 varchar(20) default 'aaa';
+                    # 变量赋值
+                    set varname01 = 'lian';
+                    # 输出变量
+                    select varname01;
+                end $$
+            语法二:
+                delimiter $$
+                create procedure proc03()
+                begin
+                    # 声明变量
+                    declare varname01 varchar(20) default 'aaa';
+                    # 变量赋值
+                    select ename into varname01 from sp_emp where empno = 1001;
+                    # 输出变量
+                    select varname01;
+                end $$
+
+        用户变量
+            声明方式: @varname
+            特点: 不需要声明,使用即声明
+            解释: 当前会话有效
+            语法: 
+
+                delimiter $$
+                create procedure proc04()
+                begin
+                    set @varname01 = 'douglas';
+                    select @varname01;
+                end $$
+                delimiter ;
+                call proc04();
+                select @varname01;
+
+        系统变量
+            系统变量即mysql提前定义好的, 不能自己编写定义
+            系统变量又分为全局变量和会话变量
+            会话变量会在每次建立一个新的连接的时候,由mysql初始化,mysql会将当前所有全局变量的值拷贝一份作为会话变量
+            全局变量的修改会影响到整个服务器, 但是会话变量的修改只会影响到当前会话(即当前客户端,比如:navicat和mysql的连接)
+            有些系统变量可以通过set语句进行修改, 有些系统变量就是只读的不可修改.
+            全局变量声明方式: @@global.varname
+            会话变量声明方式: @@session.varname
+            全局变量和会话变量的使用方式都是一样的.
+        
+    参数传递(paramPassing.sql)    
+        in
+            解释: 用于参数声明
+        out
+            解释: 用于返回值声明
+        inout
+            解释: 用于从外部传入的参数经过修改后还可以返回的变量, 既可以用于参数声明传入变量值, 也可以修改变量值.
+    
+    流程控制语句(controlStatement.sql)
+        
+        TODO
+
+
+
+
+
+
+
+
+
 
 
 

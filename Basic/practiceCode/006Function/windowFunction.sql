@@ -137,13 +137,73 @@ from employee4;
 ############################## 分布函数 ##############################
 #####################################################################
 
-# TODO
+# 查询小于等于当前薪资的比例
+# (刘备的三千 输入为 0.25 解释: 小于等于3000的有三条, 这三条除总行数, 3 / 12 = 1 / 4 = 0.25)
+select dname,
+       ename,
+       salary,
+       cume_dist() over (order by salary) as rn1,
+       cume_dist() over (partition by dname order by salary) as rn2
+from employee4;
 
+select dname,
+       ename,
+       salary,
+       rank() over (partition by dname order by salary desc) as rn1,
+       percent_rank() over (partition by dname order by salary desc) as rn2
+from employee4;
 
+#####################################################################
+############################## 前后函数 ##############################
+#####################################################################
 
+select dname,
+       ename,
+       hiredate,
+       lag(hiredate, 1, '2000-01-01') over (partition by dname order by hiredate) as rn1,
+       lag(hiredate, 2) over (partition by dname order by hiredate) as rn2
+from employee4;
 
+select dname,
+       ename,
+       hiredate,
+       lead(hiredate, 1, '2000-01-01') over (partition by dname order by hiredate) as rn1,
+       lead(hiredate, 2) over (partition by dname order by hiredate) as rn2
+from employee4;
 
+#####################################################################
+############################## 头尾函数 ##############################
+#####################################################################
 
+# 按照日期排序查询第一个入职和最后一个入职员工的薪资
+select dname,
+       ename,
+       hiredate,
+       salary,
+       first_value(salary) over (partition by dname order by hiredate) as rn1,
+       last_value(salary) over (partition by dname order by hiredate) as rn2
+from employee4;
+
+#####################################################################
+############################## 头尾函数 ##############################
+#####################################################################
+
+# 截止到当前行薪资, 显示每个员工的薪资中排名第二或者第三的薪资
+select dname,
+       ename,
+       hiredate,
+       salary,
+       nth_value(salary,2) over (partition by dname order by hiredate) as nv1,
+       nth_value(salary,3) over (partition by dname order by hiredate) as nv2
+from employee4;
+
+# 将每个部门员工按照入职日期分成3组
+select dname,
+       ename,
+       hiredate,
+       salary,
+       ntile(3) over (partition by dname order by hiredate) as n1
+from employee4;
 
 
 
