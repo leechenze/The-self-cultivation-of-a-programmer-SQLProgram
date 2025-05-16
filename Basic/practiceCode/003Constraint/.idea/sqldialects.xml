@@ -22,8 +22,11 @@
     <file url="file://$PROJECT_DIR$/../006Function/windowFunction.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/../007View/viewManipulate.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/../008StoredProcedures/controlStatement.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/../008StoredProcedures/cursor.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/../008StoredProcedures/example.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/../008StoredProcedures/paramPassing.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/../008StoredProcedures/storeFunc.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/../008StoredProcedures/variable.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/../009Trigger/triggerManipulate.sql" dialect="MySQL" />
   </component>
 </project>

@@ -829,12 +829,68 @@
     
     流程控制语句(controlStatement.sql)
         
+        分支语句
+            if
+            case
+        循环语句
+            循环分类
+                while
+                repeat
+                loop
+            循环控制
+                leave类似于break, 跳出, 结束当前所在的循环
+                iterate类似于continue, 继续, 结束本次循环, 继续下一次
+
+    游标(cursor.sql)
+        游标(Cursor)也被称作光标
+        是用来存储查询结果集的数据类型, 在存储过程和函数中可以使用游标对结果集进行循环处理.
+        光标的使用包括 光标声明, open, fetch 和 close.
+        特别声明:
+            在语法中, 变量声明, 游标声明, handler声明, 循环体是必须按照先后顺序书写的, 否则创建存储过程出错.
+        
+        游标使用语法:
+            # 定义局部变量
+            declare varEmpno int;
+            declare varEname varchar(20);
+            declare varSal double;
+            
+            # 声明游标
+            declare cusCursor cursor for
+            select a.empno, a.ename, a.sal from sp_emp as a
+                join sp_dept b on a.deptno = b.deptno
+                                    and b.dname = dname;
+            
+            # 打开游标
+            open cusCursor;
+            
+            # 通过游标获取值
+            labelA: loop
+                fetch cusCursor into varEmpno,varEname,varSal;
+                select varEmpno, varEname, varSal;
+            end loop labelA;
+            
+            # 关闭游标
+            close cusCursor;
+        
+        异常处理-句柄处理Handler
+            
+    存储函数(storeFunc.sql)
+        存储函数必须有返回值.
+        MySql需要设置对函数权限信任.
+        set global log_bin_trust_function_creators = true;
+
+
+
+
+
+
+玖.(009Trigger)
+    
+    概述:
         TODO
-
-
-
-
-
+    
+    操作(triggerManipulate.sql)
+        
 
 
 
