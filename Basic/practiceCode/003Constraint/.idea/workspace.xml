@@ -5,13 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bc9c5af5-c1a1-43cc-ae11-7bedbf1157fd" name="Changes" comment="P126T000000">
-      <change afterPath="$PROJECT_DIR$/../008StoredProcedures/cursor.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../008StoredProcedures/storeFunc.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../009Trigger/triggerManipulate.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../010Index/singleColumnIndex.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../SummaryOfNotes.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../SummaryOfNotes.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../008StoredProcedures/controlStatement.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../008StoredProcedures/controlStatement.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../009Trigger/triggerManipulate.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../009Trigger/triggerManipulate.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

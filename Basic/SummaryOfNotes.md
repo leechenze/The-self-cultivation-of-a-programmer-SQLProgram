@@ -714,7 +714,7 @@
 
 
 
-柒.(007View)
+柒.视图(007View)
 
     视图介绍:
         视图是一个虚拟表, 非真实表, 其本质是根据sql语句获取动态的数据集, 并为其命名, 用户使用时只需使用视图名称即可获取结果集, 并可以将其当作表来使用
@@ -752,7 +752,7 @@
 
 
 
-捌.(008StoredProcedures)
+捌.存储过程(008StoredProcedures)
 
     存储过程介绍
         mysql从5.0版本开始支持存储过程
@@ -884,18 +884,58 @@
 
 
 
-玖.(009Trigger)
+玖.触发器(009Trigger)
     
     概述:
+        触发器是一种特殊的存储过程, 区别是触发器无需调用, 当对数据库表中的数据执行DML操作时自动触发这个SQL片段的执行, 无需手动调用
+        在MySql中, 只有执行insert,delete,update操作时才能自动触发这个Sql片段的执行
+        触发器的特性可以协助应用在数据库端确保数据的完整性, 日志记录, 数据校验等操作.
+        使用别名OLD和NEW来引用触发器中发生变化的记录内容, 这与其他的数据库是相似的, 现在触发器还只支持行级触发, 不支持语句级触发.
+        NEW/OLD:
+            insert型触发器:
+                new表示将要或已新增的数据
+            update型触发器:
+                old表示修改之前的数据,new表示将要或已经修改后的数据.
+            delete型触发器:
+                old表示将要或者已经删除的数据
+        
+    特性:        
+        什么条件会触发: I, D, U        
+        在什么条件触发: 在增删改前或后        
+        触发频率: 针对每一行执行         
+        触发器定义在表上, 附着在表上
+    语法:
+        create trigger trigger01 after insert
+            on user for each row
+            insert into user_logs values(null, now(), '添加用户操作');
+        
+        show triggers
+
+        drop trigger if exists trigger03;
+        
+    操作(triggerManipulate.sql)
+    
+    注意事项:
+        1.MySql触发器不能对本表进行IDU操作, 以免递归循环触发
+        2.尽量少使用触发器, 假设触发器触发每次执行1s, insert table 500条数据, 那么就需要触发500此触发器, 光是触发器执行的时间就能花费500s
+            而insert 500条数据一共是1s, 那么这个insert的效率就非常低了.
+        3.触发器是针对每一行的, 对增删改非常频繁的表上切记不要使用触发器, 因为它非常消耗资源.
+    
+    总结: 触发器了解一下即可, 实际场景用处不大, 触发器的功能完全可以通过后端代码进行实现.
+
+
+
+
+
+拾.索引(010Index)
+
+    简介
         TODO
     
-    操作(triggerManipulate.sql)
+    单列索引(singleColumnIndex.sql)
         
-
-
-
-
-
+    
+    
 
 
 
