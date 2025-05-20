@@ -4,12 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bc9c5af5-c1a1-43cc-ae11-7bedbf1157fd" name="Changes" comment="P126T000000">
-      <change afterPath="$PROJECT_DIR$/../010Index/singleColumnIndex.sql" afterDir="false" />
+    <list default="true" id="bc9c5af5-c1a1-43cc-ae11-7bedbf1157fd" name="Changes" comment="P150T000000">
+      <change afterPath="$PROJECT_DIR$/../010Index/compositeIndex.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../010Index/fulltext.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../010Index/internalPrinciples.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../010Index/spatialIndex.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../011StorageEngine/manipulate.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../SummaryOfNotes.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../SummaryOfNotes.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../009Trigger/triggerManipulate.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../009Trigger/triggerManipulate.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../010Index/singleColumnIndex.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../010Index/singleColumnIndex.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,6 +74,8 @@
     <MESSAGE value="P094T000000" />
     <MESSAGE value="P115T000000" />
     <MESSAGE value="P126T000000" />
-    <option name="LAST_COMMIT_MESSAGE" value="P126T000000" />
+    <MESSAGE value="P131T000000" />
+    <MESSAGE value="P150T000000" />
+    <option name="LAST_COMMIT_MESSAGE" value="P150T000000" />
   </component>
 </project>

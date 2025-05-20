@@ -28,6 +28,11 @@
     <file url="file://$PROJECT_DIR$/../008StoredProcedures/storeFunc.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/../008StoredProcedures/variable.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/../009Trigger/triggerManipulate.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/../010Index/compositeIndex.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/../010Index/fulltext.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/../010Index/internalPrinciples.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/../010Index/singleColumnIndex.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/../010Index/spatialIndex.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/../011StorageEngine/manipulate.sql" dialect="MySQL" />
   </component>
 </project>
