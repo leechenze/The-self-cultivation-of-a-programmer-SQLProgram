@@ -1368,15 +1368,173 @@
                 | Impossible WHERE                  | WHERE 条件永远不成立                            |
                 | Select tables optimized away      | 对聚合函数做了优化（如 `SELECT COUNT(*) FROM ...` ） |
         profile分析Sql
-            TODO
+            Mysql从5.0.37版本开始增加了对 show profiles 和 show profile 语句的支持
+            show profiles 能够在做SQL优化时帮助我们了解时间都耗费到哪里去了。。
+            通过 have_profiling 参数，能够看到当前MySQL是否支持profile：
+                select @@have_profiling;
+                set profiling = 1;
+            在获取到最消耗时间的线程状态后，MySQL支持进一步选择all、cpu、block io 、context switch、page faults
+            等明细类型类查看MySQL在使用什么资源上耗费了过高的时间。例如，选择查看CPU的耗费时间
+            
+            SHOW PROFILE ALL FOR QUERY <query_id> 输出说明
+                | 字段名                 | 说明                   |
+                | ------------------- | -------------------- |
+                | `Status`            | 当前阶段的名称（查询执行过程的步骤）   |
+                | `Duration`          | 每个阶段耗费的时间（单位：秒）      |
+                | `CPU_user`          | 用户态 CPU 时间           |
+                | `CPU_system`        | 内核态 CPU 时间           |
+                | `Block_ops_in`      | 阻塞的输入操作数（如磁盘读取）      |
+                | `Block_ops_out`     | 阻塞的输出操作数（如磁盘写入）      |
+                | `Messages_sent`     | 发送的消息数量（比如网络包）       |
+                | `Messages_received` | 接收的消息数量              |
+                | `Page_faults_major` | 主页错误（需要访问磁盘）         |
+                | `Page_faults_minor` | 次页错误（可以从内存中恢复）       |
+                | `Swaps`             | 内存交换次数               |
+                | `Source_function`   | 内部函数调用（可选项，debug 信息） |
+                | `Source_file`       | 源码文件名（可选项）           |
+                | `Source_line`       | 行号（可选项）              |
+            常见 Status 类型解释（即执行过程阶段）
+                | `Status`               | 含义             |
+                | ---------------------- | -------------- |
+                | `starting`             | 初始化阶段，分配内存等    |
+                | `checking permissions` | 检查权限           |
+                | `Opening tables`       | 打开表文件          |
+                | `System lock`          | 等待表锁或行锁        |
+                | `init`                 | 初始化查询（如创建临时表）  |
+                | `optimizing`           | 优化查询           |
+                | `statistics`           | 收集统计信息（用于优化器）  |
+                | `preparing`            | 准备执行计划         |
+                | `executing`            | 执行计划中操作        |
+                | `Sending data`         | 执行主查询并将结果返回客户端 |
+                | `end`                  | 查询收尾阶段         |
+                | `query end`            | 查询结束的清理阶段      |
+                | `closing tables`       | 关闭表            |
+                | `freeing items`        | 释放内存资源         |
+                | `logging slow query`   | 如果是慢查询，写入日志    |
+                | `cleaning up`          | 最后资源清理         |
+            SHOW PROFILE <type> FOR QUERY <query_id> 中 <type> 选项解释:
+                | 类型（type）           | 含义                       |
+                | ------------------ | ------------------------ |
+                | `CPU`              | 显示 CPU 使用时间（user/system） |
+                | `MEMORY`           | 显示内存使用情况（不总是可用）          |
+                | `BLOCK IO`         | 显示磁盘 I/O 情况              |
+                | `CONTEXT SWITCHES` | 显示上下文切换情况                |
+                | `IPC`              | 显示进程间通信数据                |
+                | `PAGE FAULTS`      | 页面错误信息                   |
+                | `SOURCE`           | 显示源码函数/文件行号（debug 用）     |
+                | `SWAPS`            | 内存交换信息                   |
+                | `ALL`              | 显示所有信息（最常用）              |
+            
         trace优化器
+            MySQL5.6提供了对SQL的跟踪trace, 通过trace文件能够进一步了解为什么优化器选择A计划, 而不是选择B计划
+            打开trace, 设置格式为 JSON，并设置trace最大能够使用的内存大小，避免解析过程中因为默认内存过小而不能够完整展示。
+                set optimizer_trace="enabled=on",end_markers_in_json=on; 
+                set optimizer_trace_max_mem_size=1000000;
+            最后， 检查information_schema.optimizer_trace就可以知道MySQL是如何执行SQL的 ：
+                select * from information_schema.optimizer_trace `\G`;
+                `\G`参数表示的是 将结果按“垂直格式”显示(json格式显示), 而不是表格形式显示。
+
         索引优化
+            索引是数据库优化最常用也是最重要的手段之一, 通过索引通常可以帮助用户解决大多数的MySQL的性能优化问题。
+            避免索引失效应用
+                全值匹配
+                最左前缀法则
+                其他匹配原则
+                    范围查询右边的列，不能使用索引 。
+                    不要在索引列上进行运算操作, 索引将失效。
+                    查询类型不匹配时, 索引将失效.
+                    尽量使用覆盖索引, 避免select *
+                    用or分割开的条件， 那么即使有涉及的索引都不会被用到。
+                    以%开头的Like模糊查询，索引失效。
+                    如果MySQL评估使用索引比全表更慢，则不使用索引。
+                    is  NULL, is NOT NULL  有时有效, 有时索引失效。
+                    普通索引时: in 走索引, not in 不走索引.
+                    主键索引时: in 走索引, not in 也走索引.
+                    单列索引和复合索引, 尽量使用复合索引.
+
         Sql优化
-        
+            大批量插入数据优化
+                当使用load 命令导入数据的时候，适当的设置可以提高导入的效率。对于InnoDB 类型的表，有以下两种方式可以提高导入的效率:
+                    主键顺序插入
+                        因为InnoDB类型的表是按照主键的顺序保存的，所以将导入的数据按照主键的顺序排列，可以有效的提高导入数据的效率。
+                        如果InnoDB表没有主键，那么系统会自动默认创建一个内部列作为主键，所以如果可以给表创建一个主键，将可以利用这点，来提高导入数据的效率。
+                    关闭唯一性校验
+                        在导入数据前执行 SET UNIQUE_CHECKS=0，关闭唯一性校验，在导入结束后执行SET UNIQUE_CHECKS=1，恢复唯一性校验，可以提高导入的效率。
+                        因为本来 username 这一列就是一列唯一索引了, 所以在导入时就无需再次校验唯一索引列的唯一性了, 从而花费不必要的时间.
+            insert优化
+                如果需要同时对一张表插入很多行数据时，应该尽量使用多个值表的insert语句，这种方式将大大的缩减客户端与数据库之间的连接、关闭等消耗。使得效率比分开执行的单个insert语句快。
+                    避免写法:
+                        insert into tb_test values(1,'Tom');
+                        insert into tb_test values(2,'Cat');
+                        insert into tb_test values(3,'Jerry');
+                    推荐写法:
+                        insert into tb_test values(1,'Tom'),(2,'Cat')，(3,'Jerry');
+                事务中插入数据尽量在一个事务中,插入多条数据, 而不是开多个事务, 每个事务插一条数据.
+                    避免写法:
+                        begin;
+                            insert into tb_test values(1,'Tom');
+                        commit;
+                        begin;
+                            insert into tb_test values(2,'Cat');
+                        commit;
+                        begin;
+                            insert into tb_test values(3,'Jerry');
+                        commit;
+                    推荐写法:
+                        begin;
+                            insert into tb_test values(1,'Tom');
+                            insert into tb_test values(2,'Cat');
+                            insert into tb_test values(3,'Jerry');
+                        commit;
+                在插入时数据时尽量保证,是有序的主键插入, 而不是无序的主键插入.
+                    避免写法:
+                        insert into tb_test values(4,'Tim');
+                        insert into tb_test values(1,'Tom');
+                        insert into tb_test values(3,'Jerry');
+                        insert into tb_test values(5,'Rose');
+                        insert into tb_test values(2,'Cat');
+                    推荐写法:
+                        insert into tb_test values(1,'Tom');
+                        insert into tb_test values(2,'Cat');
+                        insert into tb_test values(3,'Jerry');
+                        insert into tb_test values(4,'Tim');
+                        insert into tb_test values(5,'Rose');
+            orderby优化    
+                两种排序情况:                    
+                    Using filesort(使用文件排序)                   
+                    第一种是通过对返回数据进行排序，也就是通常说的 filesort 排序，所有不是通过索引直接返回排序结果的排序都叫 FileSort 排序。
+                    Using index(使用索引)
+                    第二种通过有序索引顺序扫描直接返回有序数据，这种情况即为 using index，不需要额外排序，操作效率高。
+                    
+                Using filesort 情况的优化
+                    通过创建合适的索引，能够减少 Filesort 的出现，但是在某些情况下，条件限制不能让Filesort消失，那就需要加快 Filesort的排序操作。对于Filesort ， MySQL 有两种排序算法：
+                        1.两次扫描算法 ：MySQL4.1 之前，使用该方式排序。首先根据条件取出排序字段和行指针信息，然后在排序区 sort buffer 中排序，如果sort buffer不够，则在临时表 temporary table 中存储排序结果。完成排序之后，再根据行指针回表读取记录，该操作可能会导致大量随机I/O操作。
+                        2.一次扫描算法：一次性取出满足条件的所有字段，然后在排序区 sort  buffer 中排序后直接输出结果集。排序时内存开销较大，但是排序效率比两次扫描算法要高。
+                    MySQL 通过比较系统变量 max_length_for_sort_data 的大小和Query语句取出的字段总大小， 来判定是否那种排序算法，如果max_length_for_sort_data 更大，那么使用第二种优化之后的算法；否则使用第一种。
+                    可以适当提高 sort_buffer_size  和 max_length_for_sort_data  系统变量，来增大排序区的大小，提高排序的效率。
+                
+            子查询优化
+                使用子查询可以一次性的完成很多逻辑上需要多个步骤才能完成的SQL操作，同时也可以避免事务或者表锁死，并且写起来也很容易。
+                但是，有些情况下，子查询是可以被更高效的连接（JOIN）替代。
+                连接(Join)查询之所以更有效率一些 ，是因为MySQL不需要在内存中创建临时表来完成这个逻辑上需要两个步骤的查询工作。
+                
 
-
-
-
+            limit优化
+                一般分页查询时，通过创建覆盖索引能够比较好地提高性能。一个常见又非常头疼的问题就是 limit 900000,10.
+                此时需要MySQL排序前900010 记录，仅仅返回900000 - 900010 的记录，其他记录丢弃，查询排序的代价非常大 。
+                优化方案一:
+                    在索引上完成排序分页操作，最后根据主键关联回原表查询所需要的其他列内容。
+                    把以下优化方案当作公式记在脑子里:
+                        select * from tb_user limit 900000, 10;
+                        优化为:
+                        select * from tb_user a, (select id from tb_user limit 900000, 10) b where a.id = b.id;
+                优化方案二:
+                    该方案适用于主键自增的表，可以把Limit 查询转换成某个位置的查询 。
+                    同样把以下优化方案当作公式记在脑子里:
+                        select * from tb_user limit 900000, 10;
+                        优化为:
+                        select * from tb_user where id > 900000 limit 10;
+                
 
 
 

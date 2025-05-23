@@ -4,15 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bc9c5af5-c1a1-43cc-ae11-7bedbf1157fd" name="Changes" comment="P150T000000">
-      <change afterPath="$PROJECT_DIR$/../012Transaction/lockManipulate.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../012Transaction/manipulate.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../013Logs/logManipulate.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../014Optimization/optimizationManipulate.sql" afterDir="false" />
+    <list default="true" id="bc9c5af5-c1a1-43cc-ae11-7bedbf1157fd" name="Changes" comment="P174T000000">
       <change beforePath="$PROJECT_DIR$/../../SummaryOfNotes.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../SummaryOfNotes.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../011StorageEngine/manipulate.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../011StorageEngine/manipulate.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../014Optimization/optimizationManipulate.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../014Optimization/optimizationManipulate.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +35,7 @@
     "RunOnceActivity.OpenDatabaseViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "last_opened_file_path": "/Users/lee/MySkills/The-self-cultivation-of-a-programmer-SQLProgram/Basic/practiceCode/003Constraint",
-    "settings.editor.selected.configurable": "preferences.sourceCode.MySQL, MariaDB"
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   },
   "keyToStringList": {
     "DatabaseDriversLRU": [
@@ -75,6 +70,11 @@
     <MESSAGE value="P126T000000" />
     <MESSAGE value="P131T000000" />
     <MESSAGE value="P150T000000" />
-    <option name="LAST_COMMIT_MESSAGE" value="P150T000000" />
+    <MESSAGE value="P174T000000" />
+    <option name="LAST_COMMIT_MESSAGE" value="P174T000000" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
